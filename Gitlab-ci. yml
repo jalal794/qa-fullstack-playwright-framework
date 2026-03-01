@@ -1,0 +1,48 @@
+image: mcr.microsoft.com/playwright:v1.40.0-focal
+
+stages:
+  - test
+  - report
+
+variables:
+  CI: "true"
+
+cache:
+  paths:
+    - node_modules/
+    - ~/.cache/ms-playwright/
+
+before_script:
+  - npm ci
+  - npx playwright install --with-deps chromium
+
+test:ui:
+  stage: test
+  script:
+    - npm run test:ui
+  artifacts:
+    when: always
+    paths:
+      - test-results.json
+      - playwright-report/
+    expire_in: 1 day
+
+test:api:
+  stage: test
+  script:
+    - npm run test:api
+  artifacts:
+    when: always
+    paths:
+      - test-results.json
+    expire_in: 1 day
+
+pages:
+  stage: report
+  script:
+    - mv playwright-report/ public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
