@@ -1,0 +1,18 @@
+{
+  "name": "qa-fullstack-playwright-framework",
+  "version": "1.0.0",
+  "description": "Fullstack QA automation framework using Playwright for UI & API testing",
+  "scripts": {
+    "test:ui": "npx playwright test --project=chromium",
+    "test:api": "npx playwright test --config=playwright.config.ts --grep @api",
+    "test:all": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "report": "npx playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "dotenv": "^16.0.0",
+    "typescript": "^5.0.0"
+  }
+}
